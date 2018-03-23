@@ -1,0 +1,5 @@
+package main;
+
+public enum HandType {
+	CLOCK_SECOND, CLOCK_MINUTE, CLOCK_HOUR, WATCH_SECOND, WATCH_MINUTE
+}
