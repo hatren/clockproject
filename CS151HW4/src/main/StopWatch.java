@@ -67,7 +67,7 @@ public class StopWatch {
 		   }
 	    	  });
 	      
-	      //restarts the stopwatch
+	      //restarts the Stopwatch
 	      redo.addActionListener( new ActionListener() { 
 	    	  public void actionPerformed(ActionEvent event) {
 	    		  //TODO: have the gui display the watch back at zero

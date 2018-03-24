@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-//this class is similar to MyClock class
+//this class is similar to MyClock Class
 public class MyStopWatch {
 	private ClockFace minDial;
 	private ClockFace secDial;
