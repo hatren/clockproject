@@ -7,31 +7,51 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class ClockTester {
+	// Variables
+	private static final int CLOCK_RADIUS = 500;
+	private static MyStopWatch stopwatch = new MyStopWatch(CLOCK_RADIUS);
+	private static MyClock clock = new MyClock(CLOCK_RADIUS);
+	private static JFrame frame = new JFrame();
+	private static JFrame clockFrame = new JFrame();
+	
+	// Main
 	public static void main(String[] args) {
-		// SET UP FRAME BASE
+		//
 		stopwatch.getSecDial().add(stopwatch.getMinDial());
 		frame.setLayout(new BorderLayout());
 		clockFrame.setLayout(new BorderLayout());
 		clockFrame.add(clock.getFace(), BorderLayout.CENTER);
 		frame.add(stopwatch.getSecDial(), BorderLayout.CENTER);
 
-		// SETTING UP THE TOP BUTTONS
-		JPanel topNav = new JPanel(new FlowLayout());
-		JButton time = new JButton("Clock");
-		topNav.add(time);
-		JButton stopWatchButt = new JButton("Stopwatch");
-		topNav.add(stopWatchButt);
-		// SETTING UP THE BOTTOM BUTTONS(ONLY APPEARS WHEN STOPWATCH IS ON)
+		// Bottom Buttons
 		JPanel bottomNav = new JPanel(new FlowLayout());
 		JButton stop = new JButton("Stop");
+		stop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				stopwatch.stopTimer();
+			}
+		});
 		JButton start = new JButton("Start");
-		JButton redo = new JButton("Restart");
-		bottomNav.add(redo);
+		start.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				stopwatch.startTimer();
+			}
+		});
+		JButton restart = new JButton("Restart");
+		restart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				// REPOSITIONS THE HANDS AND STARTS FROM 0 WITHOUT STARTING AGAIN
+				stopwatch.restart();
+				stopwatch.getSecDial().repaint();
+				stopwatch.getMinDial().repaint();
+			}
+		});
+		bottomNav.add(restart);
 		bottomNav.add(start);
 		bottomNav.add(stop);
-		////////////////////////////////////
-
-		// ACTION LISTENERS FOR CLOCK AND STOPWATCH
+		// Top Buttons
+		JPanel topNav = new JPanel(new FlowLayout());
+		JButton time = new JButton("Clock");
 		time.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				clockFrame.add(topNav, BorderLayout.NORTH);
@@ -40,6 +60,8 @@ public class ClockTester {
 				frame.setVisible(false);
 			}
 		});
+		topNav.add(time);
+		JButton stopWatchButt = new JButton("Stopwatch");
 		stopWatchButt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				frame.add(bottomNav, BorderLayout.SOUTH);
@@ -49,35 +71,13 @@ public class ClockTester {
 				clockFrame.setVisible(false);
 			}
 		});
-		///////////////////////////////
+		topNav.add(stopWatchButt);
 
-		// ACTION LISTENER FOR STOPWATCH BUTTONS
-		stopwatch.getSecDial().repaint();
-		stopwatch.getMinDial().repaint();
-		// starts the stop watch (working)
-		start.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				stopwatch.startTimer();
-			}
-		});
-		// stops the stop watch (working)
-		stop.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				stopwatch.stopTimer();
-			}
-		});
-		// restarts the stop watch (working)
-		redo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				// REPOSITIONS THE HANDS AND STARTS FROM 0 WITHOUT STARTING AGAIN
-				stopwatch.restart();
-				stopwatch.getSecDial().repaint();
-				stopwatch.getMinDial().repaint();
-			}
-		});
-		//////////////////////////////////////////////
+
 
 		// DISPLAYS CLOCK FIRST
+		stopwatch.getSecDial().repaint();
+		stopwatch.getMinDial().repaint();
 		clockFrame.add(topNav, BorderLayout.NORTH);
 		clock.getFace().repaint();
 
@@ -87,9 +87,5 @@ public class ClockTester {
 		clockFrame.setVisible(true);
 	}
 
-	private static final int CLOCK_RADIUS = 500;
-	private static MyStopWatch stopwatch = new MyStopWatch(CLOCK_RADIUS);
-	private static MyClock clock = new MyClock(CLOCK_RADIUS);
-	private static JFrame frame = new JFrame();
-	private static JFrame clockFrame = new JFrame();
+
 }
