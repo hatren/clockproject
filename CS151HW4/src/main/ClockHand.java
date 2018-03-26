@@ -19,7 +19,7 @@ public class ClockHand implements MoveableShape {
 	private double rotationFactor;
 	
 	// Constructor
-	public ClockHand(HandType type, double clockRadius, Timer globalTimer, ClockFace clock) {
+	public ClockHand(HandType type, double clockRadius, Timer globalTimer) {
 		this.globalTimer = globalTimer;
 		this.type = type;
 		
@@ -71,6 +71,9 @@ public class ClockHand implements MoveableShape {
 	// Draws the hand based on 
 	public void draw(Graphics2D g2) {
 		// Set Stroke
+		int adjustx = 250; 
+		int adjusty = 250;
+		
 		switch(type) {
 			case CLOCK_HOUR: 
 				g2.setColor(Color.BLACK);
@@ -86,9 +89,14 @@ public class ClockHand implements MoveableShape {
 				break;
 			// Use these for stopwatch
 			case WATCH_MINUTE:
+				 adjustx = 125;
+				 adjusty = 250;
+				 g2.setColor(Color.BLACK);
+				g2.setStroke(new BasicStroke(3f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 1f));
 				break;
-				
 			case WATCH_SECOND:
+				g2.setStroke(new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 1f));
+				g2.setColor(Color.RED);
 				break;
 			default:
 				throw new Error("Unsupported Type of ClockHand");
@@ -96,10 +104,9 @@ public class ClockHand implements MoveableShape {
 		
 		// x = R*cos((t-15)*theta)
 		// y = R*sin((t-15)*theta)
-		// Add 250 to adjust for Java coordinates
-		g2.drawLine(250, 250,
-				(int) (handRadius*Math.cos((currentTime-15)*rotationFactor) +250), 
-				(int) (handRadius*Math.sin((currentTime-15)*rotationFactor) +250));
+		g2.drawLine(adjustx, adjusty,
+				(int) (handRadius*Math.cos((currentTime-15)*rotationFactor) +adjustx), 
+				(int) (handRadius*Math.sin((currentTime-15)*rotationFactor) +adjusty));
 	}
 	
 	@Override
@@ -115,11 +122,15 @@ public class ClockHand implements MoveableShape {
 			else {
 				currentTime = currentTime%60;
 			}
-		}
 			// Reset Time Reference
 			timeReference -= handRate;
+		}		
 	}
 
 	// TODO: May need a setTime() method to reinitialize time. Use LocalDateTime.now().get_____()
+	public void setTime(double time) {
+		this.currentTime = time;
+	}
+	
 }
 

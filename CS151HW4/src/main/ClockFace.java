@@ -116,6 +116,11 @@ public class ClockFace extends JPanel
 	  		hand.draw(g2);
       }
    }
+   
+   @Override
+   public Dimension getPreferredSize() {
+	   return new Dimension(x + width, y + width);
+   }
 
    private int x;
    private int y;

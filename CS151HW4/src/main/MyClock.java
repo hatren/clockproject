@@ -35,11 +35,11 @@ public class MyClock {
 		globalTimer.start();
 		
 		// Create and Add ClockHands
-		secondHand = new ClockHand(HandType.CLOCK_SECOND, clockRadius, globalTimer, clockFace);
+		secondHand = new ClockHand(HandType.CLOCK_SECOND, clockRadius, globalTimer);
 		clockFace.handList.add(secondHand);
-		minuteHand = new ClockHand(HandType.CLOCK_MINUTE, clockRadius, globalTimer, clockFace);
+		minuteHand = new ClockHand(HandType.CLOCK_MINUTE, clockRadius, globalTimer);
 		clockFace.handList.add(minuteHand);
-		hourHand = new ClockHand(HandType.CLOCK_HOUR, clockRadius, globalTimer, clockFace);
+		hourHand = new ClockHand(HandType.CLOCK_HOUR, clockRadius, globalTimer);
 		clockFace.handList.add(hourHand);
 	}
 	
@@ -47,7 +47,4 @@ public class MyClock {
 	public ClockFace getFace() {
 		return clockFace;
 	}
-	
-	// TODO: May need a stop() method to pause the timer when swapping to the Stopwatch
-	// TODO: May need a start() method to start timer when swapping back from the Stopwatch
 }
